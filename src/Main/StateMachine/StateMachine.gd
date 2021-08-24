@@ -7,16 +7,18 @@ class_name StateMachine, "res://assets/icons/state_machine.svg"
   (_physics_process, _unhandled_input) to the active state
 """
 
-export var initial_state: = NodePath()
+export var initial_state := NodePath()
 
 onready var state: State = get_node(initial_state) setget set_state
-onready var _state_name: = state.name
+onready var _state_name := state.name
 
 func _ready() -> void:
   # owner will be the parent node, like 'Player' or 'Enemy'
   # if the StateMachine is saved as its own scene, it will reference itself
   # once the parent node emits 'ready' signal, the rest of the code will execute
   yield(owner, "ready")
+  state.enter()
+
 func _init() -> void:
   add_to_group("state_machine")
   state.enter()
@@ -29,9 +31,9 @@ func _physics_process(delta: float) -> void:
 
 func transition_to(target_state_path: String, msg: Dictionary = {}) -> void:
   if not has_node(target_state_path):
-    return
+	  return
 
-  var target_state: = get_node(target_state_path)
+  var target_state := get_node(target_state_path)
 
   state.exit()
   self.state = target_state
