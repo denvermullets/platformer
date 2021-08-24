@@ -21,7 +21,6 @@ func _ready() -> void:
 
 func _init() -> void:
   add_to_group("state_machine")
-  state.enter()
 
 func _unhandled_input(event: InputEvent) -> void:
   state.unhandled_input(event)
