@@ -37,7 +37,7 @@ func _get_configuration_warning() -> String:
 
 
 func track(property: String) -> void:
-	var label: = Label.new()
+	var label := Label.new()
 	label.autowrap = true
 	label.name = property.capitalize()
 	_container.add_child(label)
@@ -58,7 +58,7 @@ func _update() -> void:
 		var label: Label = _container.get_child(search_array.find(property))
 		var value = reference.get(property)
 
-		var text: = ""
+		var text := ""
 		if value is Vector2:
 			text = "(%01d %01d)" % [value.x, value.y]
 		else:
