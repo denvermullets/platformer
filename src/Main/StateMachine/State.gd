@@ -20,7 +20,7 @@ func physics_process(delta: float) -> void:
 func enter(msg: Dictionary = {}) -> void:
   return
 
-func _exit_tree() -> void:
+func exit() -> void:
   return
 
 func _get_state_machine(node: Node) -> Node:
