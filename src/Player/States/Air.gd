@@ -1,9 +1,16 @@
 extends State
 
 export var acceleration_x := 5000.0
+export var jump_impulse := 900.0
+export var max_jump_count := 2
+
+var _jump_count := 0
 
 func unhandled_input(event: InputEvent) -> void:
-	get_parent().unhandled_input(event)
+	var move := get_parent()
+	if event.is_action_pressed("jump") and _jump_count < max_jump_count:
+		jump()
+	move.unhandled_input(event)
 
 func physics_process(delta: float) -> void:
 	var move := get_parent()
@@ -24,12 +31,18 @@ func enter(msg: Dictionary = {}) -> void:
 		move.max_speed.x = max(abs(msg.velocity.x), move.max_speed_default.x)
 
 	if "impulse" in msg:
-		move.velocity += calculate_jump_velocity(msg.impulse)
+		jump()
 
 func exit() -> void:
 	var move := get_parent()
-	move.exit()
 	move.acceleration = move.acceleration_default
+	_jump_count = 0
+	move.exit()
+
+func jump() -> void:
+	var move := get_parent()
+	move.velocity += calculate_jump_velocity(jump_impulse)
+	_jump_count += 1
 
 func calculate_jump_velocity(impulse := 0.0) -> Vector2:
 	var move := get_parent()
