@@ -33,6 +33,7 @@ func enter(msg: Dictionary = {}) -> void:
 	if "impulse" in msg:
 		jump()
 
+
 func exit() -> void:
 	var move := get_parent()
 	move.acceleration = move.acceleration_default
